@@ -1,6 +1,6 @@
 create table ware(id serial primary key, name varchar(30)); 
 
-insert into ware(name)values('Kolpapier');
+insert into ware(name)values('Klopapier');
 insert into ware(name)values('Stühle');
 
 create table bestand(id serial primary key, wid int references ware(id), min int, cur int);
@@ -10,7 +10,17 @@ create table preis(id serial primary key, wid int references ware(id), country c
 create table bestellung(id serial primary key, wid int, datum date, active char(1) check(active in('Y','N')) default 'N', vol int); 
 ALTER TABLE bestellung ADD CONSTRAINT ware_bestellung FOREIGN KEY (wid) REFERENCES ware (id);
 
+insert into bestand(wid,min,cur)values(1,100,121); 
+insert into bestand(wid,min,cur)values(2,10,9);
 
+
+insert into preis(wid,country, preis)values(1,'DE',1,23);
+insert into preis(wid,country, preis)values(1,'GB',0.89);
+insert into preis(wid,country, preis)values(1,'AT', 2.10);  
+insert into preis(wid,country, preis)values(2,'AT', 245.10);  
+insert into preis(wid,country, preis)values(2,'EN', 300.00);
+insert into preis(wid,country, preis)values(2,'DE', 310.00); 
+	
 CREATE OR REPLACE FUNCTION waren_entnahme() RETURNS trigger as 
 	$BODY$
 	DECLARE 
